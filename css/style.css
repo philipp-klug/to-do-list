@@ -36,3 +36,11 @@ body {
     border-bottom-left-radius: 0;
 }
 
+.remove-to-do:hover {
+    background: rgb(139, 97, 93);
+    color: #fff;
+}
+
+.todo-item {
+    min-width: 300px;
+}
