@@ -36,8 +36,14 @@ body {
     border-bottom-left-radius: 0;
 }
 
+.remove-to-do {
+    color: #f08080;
+    padding: 0.2em;
+    margin-right: 50px;
+}
+
 .remove-to-do:hover {
-    background: rgb(139, 97, 93);
+    background: #f08080;
     color: #fff;
 }
 

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 11. Nov 2020 um 14:07
--- Server-Version: 10.4.11-MariaDB
--- PHP-Version: 7.4.1
+-- Erstellungszeit: 12. Nov 2020 um 10:20
+-- Server-Version: 10.4.14-MariaDB
+-- PHP-Version: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -40,9 +39,10 @@ CREATE TABLE `todos` (
 --
 
 INSERT INTO `todos` (`id`, `title`, `date_time`, `checked`) VALUES
-(1, 'Erster Title Eintrag', '2020-11-11 13:25:52', 1),
-(2, 'Hello World!', '2020-11-11 13:25:52', 0),
-(3, 'Another a bit later.', '2020-11-11 13:26:22', 1);
+(8, 'Erster Eintrag', '2020-11-12 10:17:25', 0),
+(9, 'To-Do Liste programmieren', '2020-11-12 10:17:49', 1),
+(10, 'Code review durchführen', '2020-11-12 10:18:48', 0),
+(11, 'Philipp einstellen', '2020-11-12 10:19:05', 0);
 
 --
 -- Indizes der exportierten Tabellen
@@ -62,7 +62,7 @@ ALTER TABLE `todos`
 -- AUTO_INCREMENT für Tabelle `todos`
 --
 ALTER TABLE `todos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
