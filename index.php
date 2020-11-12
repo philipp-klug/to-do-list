@@ -6,7 +6,7 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>To-Do-List</title>
+        <title>To-Do List</title>
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
         <!-- Own CSS -->
@@ -16,7 +16,7 @@
 
         <form class="form-todo" action="app/add.php" method="POST" autocomplete="off">
             <img class="mb-4" src="img/todo.png" alt="" width="80" height="80">
-            <h1 class="h3 mb-4 font-weight-normal">To Do List</h1>
+            <h1 class="h3 mb-4 font-weight-normal">To-Do List</h1>
 
             <!-- error handling, if message=error isset-->
             <?php if(isset($_GET['message']) && $_GET['message'] == 'error') { ?>
@@ -25,6 +25,7 @@
                 <input type="text" name="title" class="form-control" placeholder="Enter To-Do">
             <?php } ?>
 
+            <!-- submit button -->
             <button class="btn btn-lg btn-primary btn-block" type="submit">Do it!</button>
         </form>
 
@@ -36,6 +37,7 @@
             <!-- Section to Show To-Dos -->
             <div class="mx-auto" class="show-todo-section">
                 <ul class="list-group">
+
                     <!-- Shown, if To-Do List is empty -->
                     <?php if($todos->rowCount() === 0) { ?>
                         <div class="todo-item">
@@ -47,6 +49,7 @@
                     <!-- While loop to print all To-Do -->
                     <?php while($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
                         <div class="todo-item">
+
                             <!-- If To-Do is checked -->
                             <?php if($todo['checked']) { ?>
                                 <li class="list-group-item" aria-disabled="true">
@@ -55,6 +58,7 @@
                                     <h2 class="checked"><?php echo $todo['title'] ?></h2>
                                     <small>created: <?php echo $todo['date_time'] ?></small>
                                 </li>
+
                                 <!-- Otherwise To-Do is unchecked -->
                             <?php } else { ?>
                                 <li class="list-group-item">
@@ -79,7 +83,8 @@
         <!-- Own Js-->
         <script>
             $(document).ready(function () {
-                //remove animation
+
+                //remove to-do from list + animation
                 $('.remove-to-do').click(function(){
                     const id = $(this).attr('id');
                    $.post("app/remove.php", {
@@ -93,7 +98,7 @@
                     );
                 });
 
-                //checked toggle
+                //checks to-do as done + animation
                 $(".check-box").click(function(e) {
                     const id = $(this).attr('data-todo-id');
                     $.post('app/check.php',
