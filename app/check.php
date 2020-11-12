@@ -11,14 +11,14 @@ if(isset($_POST['id'])) {
         echo 'error';
     } else {
         //execute statement
-        $stmt = $conn->prepare("SELECT id, checked FROM todos WHERE id=?");
+        $todos = $conn->prepare("SELECT id, checked FROM todos WHERE id=?");
         $todos->execute([$id]);
-        $res = $stmt->execute([$id]);
 
         $todo = $todos->fetch();
         $uId = $todo['id'];
         $checked = $todo['checked'];
 
+        //toggle value
         $uChecked = $checked ? 0 : 1;
 
         $res = $conn->query("UPDATE todos SET checked=$uChecked WHERE id =$uId");

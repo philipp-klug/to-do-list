@@ -37,7 +37,8 @@
                 <!-- Shown, if To-Do List is empty -->
                 <?php if($todos->rowCount() === 0) { ?>
                     <div class="todo-item">
-                        NO TO DOS TO DO <!--<img src="img/blank.jpg" width="100%" />-->
+                        No To-Do's to do! <br/>
+                        <img src="img/blank.jpg" width="300px" />
                     </div>
                 <?php } ?>
 
@@ -47,22 +48,18 @@
                         <!-- If To-Do is checked -->
                         <?php if($todo['checked']) { ?>
                             <li class="list-group-item" aria-disabled="true">
-                                <p><s><?php echo $todo['title'] ?></s></p>
-                                <br/>
-                                <small>created: <?php echo $todo['date_time'] ?></small>
-                                <br />
-                                <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" checked />
                                 <span id="<?php echo $todo['id']; ?>" class="remove-to-do" aria-disabled="false">x</span>
+                                <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" checked />
+                                <h2 class="checked"><?php echo $todo['title'] ?></h2>
+                                <small>created: <?php echo $todo['date_time'] ?></small>
                             </li>
                             <!-- Otherwise To-Do is unchecked -->
                         <?php } else { ?>
                             <li class="list-group-item">
-                                <p><?php echo $todo['title'] ?></p>
-                                <br />
-                                <small>created: <?php echo $todo['date_time'] ?></small>
-                                <br />
-                                <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" />
                                 <span id="<?php echo $todo['id']; ?>" class="remove-to-do">x</span>
+                                <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" />
+                                <h2><?php echo $todo['title'] ?></h2>
+                                <small>created: <?php echo $todo['date_time'] ?></small>
                             </li>
                         <?php } ?>
                     </div>
@@ -103,11 +100,11 @@
                     },
                     (data) => {
                         if(data != 'error') {
-                            const p = $(this).next();
+                            const h2 = $(this).next();
                             if(data === '1') {
-                                p.removeClass('checked');
+                                h2.removeClass('checked');
                             } else {
-                                p.addClass('checked');
+                                h2.addClass('checked');
                             }
                         }
                     }

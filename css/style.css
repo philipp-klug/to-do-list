@@ -44,3 +44,7 @@ body {
 .todo-item {
     min-width: 300px;
 }
+
+.checked {
+    text-decoration: line-through;
+}
