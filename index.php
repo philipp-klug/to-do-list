@@ -1,4 +1,51 @@
 <?php require 'dbCon.php' ?>
+<?php
+
+    /**
+     * If submit-btn clicked
+     */
+    if (isset($_POST['submit-btn'])) {
+        $todoTitle = $_POST['title'];
+        $toDo->setTitle($todoTitle);
+
+        //Statement ADD
+        if($toDo->add()) {
+            header("Location: index.php?inserted");
+        } else {
+            header("Location: index.php?insertfailure");
+        }
+    }
+
+    /**
+     * If delete clicked
+     */
+    if(isset($_POST['delete-btn'])){
+        $toDoId = $_POST['delete-btn'];
+        $toDo->setId($toDoId);
+
+        if($toDo->delete()) {
+            header("Location: index.php?deleted");
+        } else {
+            header("Location: index.php?deletedfailure");
+        }
+    }
+
+    /**
+     * If to-do checked as done
+     */
+    if(isset($_POST['check-btn'])){
+        $taskId = $_POST['check-btn'];
+        $toDo->setId($taskId);
+        if($toDo->check())
+        {
+            header("Location: index.php?completed");
+        }
+        else
+        {
+            header("Location: index.php?completedfailure");
+        }
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,64 +61,15 @@
     </head>
     <body class="text-center">
 
-        <form class="form-todo" action="app/add.php" method="POST" autocomplete="off">
-            <img class="mb-4" src="img/todo.png" alt="" width="80" height="80">
-            <h1 class="h3 mb-4 font-weight-normal">To-Do List</h1>
+        <!-- Section Form -->
+        <?php include 'section/form.php'; ?>
 
-            <!-- error handling, if message=error isset-->
-            <?php if(isset($_GET['message']) && $_GET['message'] == 'error') { ?>
-                <input type="text" name="title" class="form-control" placeholder="Enter To-Do" style="border-color: #ff6666" > <!-- Leaving off 'required' to show error handling -->
-            <?php } else { ?>
-                <input type="text" name="title" class="form-control" placeholder="Enter To-Do">
-            <?php } ?>
+        <?php include 'section/listall.php'; ?>
 
-            <!-- submit button -->
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Do it!</button>
-        </form>
-
-            <!-- DB query to get all data -->
-            <?php
-                $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
-            ?>
-
-            <!-- Section to Show To-Dos -->
-            <div class="mx-auto" class="show-todo-section">
-                <ul class="list-group">
-
-                    <!-- Shown, if To-Do List is empty -->
-                    <?php if($todos->rowCount() === 0) { ?>
-                        <div class="todo-item">
-                            No To-Do's to do! <br/>
-                            <img src="img/blank.jpg" width="300px" />
-                        </div>
-                    <?php } ?>
-
-                    <!-- While loop to print all To-Do -->
-                    <?php while($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
-                        <div class="todo-item">
-
-                            <!-- If To-Do is checked -->
-                            <?php if($todo['checked']) { ?>
-                                <li class="list-group-item" aria-disabled="true">
-                                    <span id="<?php echo $todo['id']; ?>" class="remove-to-do" aria-disabled="false">x</span>
-                                    <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" checked />
-                                    <h2 class="checked"><?php echo $todo['title'] ?></h2>
-                                    <small>created: <?php echo $todo['date_time'] ?></small>
-                                </li>
-
-                                <!-- Otherwise To-Do is unchecked -->
-                            <?php } else { ?>
-                                <li class="list-group-item">
-                                    <span id="<?php echo $todo['id']; ?>" class="remove-to-do" aria-disabled="false">x</span>
-                                    <input type="checkbox" class="check-box" data-todo-id="<?php echo $todo['id']; ?>" />
-                                    <h2><?php echo $todo['title'] ?></h2>
-                                    <small>created: <?php echo $todo['date_time'] ?></small>
-                                </li>
-                            <?php } ?>
-                        </div>
-                    <?php } ?>
-                </ul>
-            </div>
+        <!-- DB query to get all data -->
+        <?php
+            //$toDo->getAll();
+        ?>
 
         <!-- Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -81,44 +79,6 @@
         <script src="js/jquery-3.2.1.min.js"></script>
 
         <!-- Own Js-->
-        <script>
-            $(document).ready(function () {
-
-                //remove to-do from list + animation
-                $('.remove-to-do').click(function(){
-                    const id = $(this).attr('id');
-                   $.post("app/remove.php", {
-                           id: id
-                       },
-                       (data) => {
-                            if(data) {
-                                $(this).parent().hide(600);
-                            }
-                       }
-                    );
-                });
-
-                //checks to-do as done + animation
-                $(".check-box").click(function(e) {
-                    const id = $(this).attr('data-todo-id');
-                    $.post('app/check.php',
-                        {
-                            id: id
-                        },
-                        (data) => {
-                            if(data != 'error') {
-                                const h2 = $(this).next();
-                                //changing classes to toggle line-through
-                                if(data === '1') {
-                                    h2.removeClass('checked');
-                                } else {
-                                    h2.addClass('checked');
-                                }
-                            }
-                        }
-                    )
-                });
-            });
-        </script>
+        <script src="js/own.js"></script>
     </body>
 </html>

@@ -12,3 +12,7 @@ try {
 }catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+
+include_once 'todo.class.php';
+
+$toDo = new todo($conn);

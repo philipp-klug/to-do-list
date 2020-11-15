@@ -1,5 +1,5 @@
 <?php
-
+/*
 if(isset($_POST['id'])) {
     require '../dbCon.php';
 
@@ -28,3 +28,4 @@ if(isset($_POST['id'])) {
     //if something went wrong
     header("Location: ../index.php?message=error");
 }
+*/
