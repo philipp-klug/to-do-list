@@ -7,16 +7,7 @@ class todo {
     protected $title;
 
     /**
-     * ___DEBUG
-     */
-    function console_log( $data ){
-        echo '<script>';
-        echo 'console.log('. json_encode( $data ) .')';
-        echo '</script>';
-    }
-
-    /**
-     * Constructor for DB connection
+     * Constructor with DB connection
      * @param $dbcon
      */
     function __construct($dbcon)
@@ -30,7 +21,6 @@ class todo {
      */
     public function setId($id) {
         $this->id = $id;
-        $this->console_log($id);
     }
 
 
@@ -42,11 +32,10 @@ class todo {
         $this->title = $title;
     }
 
-
     /**
-     * ***
-     * Statements
-     * ***
+     * Statement add
+     * Insert value that is in input named 'title' was entered
+     * @return bool
      */
     public function add() {
         try {
@@ -60,6 +49,10 @@ class todo {
         }
     }
 
+    /**
+     * Statement delete
+     * @return bool
+     */
     public function delete(){
         try {
             $stmt = $this->dbcon->prepare("DELETE FROM todos WHERE id=:id");
@@ -72,39 +65,32 @@ class todo {
         }
     }
 
+    /**
+     * Statement check
+     * toggle 'checked' in db if 'check-btn' pressed
+     * @return bool
+     */
     public function check() {
-        $stmt = $this->dbcon->query("SELECT id, checked FROM todos WHERE id=$this->id");
-        die($stmt);
         try {
             //checks, if to-do was entered
 
             if(empty($this->id)) {
-                echo 'error';
+                return false;
             } else {
                 //execute statement
                 $stmt = $this->dbcon->query("SELECT id, checked FROM todos WHERE id=$this->id");
-
-
-                $todo = $stmt->fetch();
-                $stmt->execute();
-
+                $todo = $stmt->fetch(PDO::FETCH_ASSOC);
+                //$this->console_log($todo);
                 $uId = $todo['id'];
                 $checked = $todo['checked'];
 
                 //toggle value
                 $uChecked = $checked ? 0 : 1;
 
-                $res = $this->dbcon->prepare("UPDATE todos SET checked=:uChecked WHERE id =:uid");
-                $res->bindparam(
-                    ":uChecked",$uChecked,
-                    ":uid",$this->id
-                );
-                $res->execute();
-
-
-
+                //$this->console_log($uChecked);
+                $res = $this->dbcon->query("UPDATE todos SET checked=$uChecked WHERE id =$uId");
+                return true;
             }
-
         } catch(PDOException $e){
             echo $e->getMessage();
             return false;
@@ -112,7 +98,9 @@ class todo {
     }
 
     /**
-     * Get all entry
+     * Statement get all
+     * Returns all entries
+     * @return object or false
      */
     public function getAll() {
         try {

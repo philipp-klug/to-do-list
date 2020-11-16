@@ -22,10 +22,8 @@ $todos = $toDo->getAll();
                 <?php if($todo['checked']) { ?>
                     <form method="post">
                         <li class="list-group-item" aria-disabled="true">
-                            <button class="btn btn-danger" type="submit" name="delete-btn" value="<?php echo $todo['id']; ?>">Delete</button>
-                            <span id="<?php echo $todo['id']; ?>" name='delete-to-do' class="delete-to-do" aria-disabled="false">x</span>
-                            <button class="btn btn-success" type="submit" name="check-btn" value="<?php echo $todo['id']; ?>">Done</button>
-                            <input type="checkbox" class="check-box" name='check-box' data-todo-id="<?php echo $todo['id']; ?>" checked />
+                            <button id="<?php echo $todo['id']; ?>" class="btn btn-danger" type="submit" name="delete-btn" value="<?php echo $todo['id']; ?>">Delete</button>
+                            <button id="<?php echo $todo['id']; ?>" class="btn btn-warning" type="submit" name="check-btn" value="<?php echo $todo['id']; ?>">Undo</button>
                             <h2 class="checked"><?php echo $todo['title'] ?></h2>
                             <small>created: <?php echo $todo['date_time'] ?></small>
                         </li>
@@ -36,9 +34,7 @@ $todos = $toDo->getAll();
                     <form method="post">
                         <li class="list-group-item">
                             <button class="btn btn-danger" type="submit" name="delete-btn" value="<?php echo $todo['id']; ?>">Delete</button>
-                            <!--<span id="<?php echo $todo['id']; ?>" class="delete-to-do" name='delete-to-do' aria-disabled="false">x</span>-->
                             <button class="btn btn-success" type="submit" name="check-btn" value="<?php echo $todo['id']; ?>">Done</button>
-                            <input type="checkbox" class="check-box" name='check-box' data-todo-id="<?php echo $todo['id']; ?>" />
                             <h2><?php echo $todo['title'] ?></h2>
                             <small>created: <?php echo $todo['date_time'] ?></small>
                         </li>
